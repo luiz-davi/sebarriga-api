@@ -19,6 +19,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
     'no-template-curly-in-string': 'off',
-    'arrow-body-style': 'off'
+    'arrow-body-style': 'off',
+    'prefer-const': 'off'
   },
 };

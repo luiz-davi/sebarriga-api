@@ -24,7 +24,7 @@ class UpdateService {
           message: "Cadastro do usuário atualizado com sucesso.",
           user: {
             id: updated_user.id,
-            name: updated_user.name,
+            name: updated_user.full_name,
             email: updated_user.email
           }
         },
