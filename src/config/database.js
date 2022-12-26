@@ -1,10 +1,10 @@
 module.exports = {
   development: {
-    dialect: 'postgres',
-    username: 'postgres',
-    password: '',
-    database: 'seubarriga_api',
-    host: 'localhost',
+    dialect: process.env.DIALECT_SEQUELIZE,
+    username: process.env.USERNAME_SEQUELIZE,
+    password: process.env.PASSWORD_SEQUELIZE,
+    database: process.env.DATABASE_NAME_SEQUELIZE,
+    host: process.env.HOST_SEQUELIZE,
     define: {
       timestamps: true,
       underscored: true,

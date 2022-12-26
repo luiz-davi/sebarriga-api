@@ -7,7 +7,9 @@ class UsersController {
 	async store(req, res){
 
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
+      full_name: Yup.string().required(),
+      cpf: Yup.string().min(9).max(9).required(),
+      rg: Yup.string().min(7).max(7).required(),
       email: Yup.string().email().required(),
       password: Yup.string().min(6).required()
     });
@@ -25,13 +27,13 @@ class UsersController {
       return res.status(400).json({ errors: validationErrors })
     }
 
-		const service = await StoreService.call(req);
+		const service = await StoreService.call(req.body);
 
     if(!service.success){
-      return res.status(400).json( service.error );
+      return res.status(service.status).json( service.error );
     }
 
-    return res.status(201).json( service.result );
+    return res.status(service.status).json( service.result );
 
 	}
 
