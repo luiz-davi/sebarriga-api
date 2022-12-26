@@ -8,9 +8,19 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      name: {
+      full_name: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      cpf: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
+      rg: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       email: {
         type: Sequelize.STRING,
