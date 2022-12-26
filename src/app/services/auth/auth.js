@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import User from "../../models/User";
-import authConfig from '../../../config/auth';
+const jwt = require('jsonwebtoken');
+const User = require("../../models/User");
+const authConfig = require('../../../config/auth');
 
 class AuthService {
   async call(body){
@@ -12,7 +12,7 @@ class AuthService {
       return {
         success: false,
         status: 404,
-        error: ["Usuário não existe!"]
+        error: { message: "Usuário não existe!" }
       };
     }
 
@@ -20,7 +20,7 @@ class AuthService {
       return {
         success: false,
         status: 401,
-        error: ["Senha inválida!"]
+        error: { message: "Senha inválida!" }
       };
     }
 
@@ -30,7 +30,7 @@ class AuthService {
       success: true,
       status: 200,
       result: {
-        toke: jwt.sign({ id, email }, authConfig.secret, { expiresIn: authConfig.expiresIn }),
+        token: jwt.sign({ id, email }, authConfig.secret, { expiresIn: authConfig.expiresIn }),
         user: {
           id,
           name,
@@ -42,4 +42,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+module.exports = new AuthService();

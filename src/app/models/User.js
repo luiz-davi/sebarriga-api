@@ -1,12 +1,15 @@
-import Sequelize, { Model } from "sequelize";
-import bcrypt from 'bcryptjs';
+const { Model } = require("sequelize");
+const Sequelize = require("sequelize");
+const bcrypt = require('bcryptjs');
 
 class User extends Model {
 
   static init(sequelize){
     super.init(
       {
-        name: Sequelize.STRING,
+        full_name: Sequelize.STRING,
+        cpf: Sequelize.STRING,
+        rg: Sequelize.STRING,
         email: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING
@@ -30,4 +33,4 @@ class User extends Model {
   }
 }
 
-export default User;
+module.exports = User;

@@ -1,5 +1,5 @@
-import User from '../app/models/User';
+const User = require('../app/models/User');
 
-export default [
+module.exports = [
   User
 ];
