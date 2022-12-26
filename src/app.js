@@ -1,11 +1,14 @@
-import express from 'express';
-import cors from 'cors';
-import routes from './routes';
-// fazendo projeto enxegar as variáveis de ambiente no .env
-import 'dotenv/config';
 // Inicializando conexão com banco e os modelos
-import './database';
-import './config/translationsYup';
+require('./database');
+// fazendo projeto enxegar as variáveis de ambiente no .env
+require('dotenv/config');
+// Traduzindo mensagens de erro do yup
+require('./config/translationsYup');
+
+const cors = require('cors');
+
+const express = require('express');
+const routes = require('./routes');
 
 class App {
 
@@ -27,4 +30,4 @@ class App {
 
 }
 
-export default new App().server;
+module.exports =  new App().server;

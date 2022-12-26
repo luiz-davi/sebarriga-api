@@ -2,6 +2,7 @@ module.exports = {
   env: {
     es6: true,
     node: true,
+    jest: true
   },
   extends: [ 'airbnb-base', 'prettier'],
 	plugins: ['prettier'],
@@ -17,6 +18,7 @@ module.exports = {
     camelcase: 'off',
     'no-underscore-dangle': 'off',
     'no-param-reassign': 'off',
-    'no-template-curly-in-string': 'off'
+    'no-template-curly-in-string': 'off',
+    'arrow-body-style': 'off'
   },
 };

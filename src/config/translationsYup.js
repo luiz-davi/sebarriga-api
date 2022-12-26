@@ -1,4 +1,4 @@
-import { setLocale } from 'yup';
+const { setLocale } = require('yup');
 
 setLocale({
   mixed: {

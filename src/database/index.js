@@ -1,6 +1,6 @@
-import Sequelize from 'sequelize';
-import databaseConfig from '../config/database';
-import models from './models_list'
+const Sequelize = require('sequelize');
+const databaseConfig = require('../config/database');
+const models = require('./models_list')
 
 class Database {
 
@@ -10,7 +10,7 @@ class Database {
 
 	init(){
     // Capturando conexão com o banco de dados
-    this.connection = new Sequelize(databaseConfig[process.env.NODE_ENV]);
+    this.connection = new Sequelize(databaseConfig);
 		// conectando os modelos da aplicação com as tabelas do banco
 		models.map(model => model.init(this.connection))
           .map(model => model.associate && model.associate(this.connection.models));
@@ -18,4 +18,4 @@ class Database {
 
 }
 
-export default new Database();
+module.exports =  new Database();

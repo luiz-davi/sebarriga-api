@@ -1,4 +1,4 @@
-import User from "../../models/User";
+const User = require("../../models/User");
 
 class StoreService {
   async call(params){
@@ -31,4 +31,4 @@ class StoreService {
   }
 }
 
-export default new StoreService();
+module.exports = new StoreService();

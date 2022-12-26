@@ -1,4 +1,4 @@
-import AuthService from "../services/auth/auth";
+const AuthService = require("../services/auth/auth");
 
 
 class AutenticacaoController {
@@ -16,4 +16,4 @@ class AutenticacaoController {
 
 }
 
-export default new AutenticacaoController();
+module.exports = new AutenticacaoController();

@@ -1,6 +1,6 @@
-import * as Yup from 'yup';
-import StoreService from '../services/users/store';
-import UpdateService from '../services/users/update';
+const Yup = require('yup');
+const StoreService = require('../services/users/store');
+const UpdateService = require('../services/users/update');
 
 class UsersController {
 
@@ -73,4 +73,4 @@ class UsersController {
 
 }
 
-export default new UsersController();
+module.exports = new UsersController();

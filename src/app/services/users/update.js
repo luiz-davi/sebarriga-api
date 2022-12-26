@@ -1,4 +1,4 @@
-import User from "../../models/User";
+const User = require("../../models/User");
 
 class UpdateService {
 
@@ -44,4 +44,4 @@ class UpdateService {
 
 }
 
-export default new UpdateService();
+module.exports = new UpdateService();

@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import User from "../../models/User";
-import authConfig from '../../../config/auth';
+const jwt = require('jsonwebtoken');
+const User = require("../../models/User");
+const authConfig = require('../../../config/auth');
 
 class AuthService {
   async call(body){
@@ -42,4 +42,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+module.exports = new AuthService();
