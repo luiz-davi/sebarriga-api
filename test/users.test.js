@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../src/app');
+const app = require('../src/app');
 
 let user = {
   full_name: 'Teste de integração',
