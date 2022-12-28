@@ -1,6 +1,7 @@
 const Yup = require('yup');
 const StoreService = require('../services/accounts/store');
 const IndexService = require('../services/accounts/index');
+const ShowService = require('../services/accounts/show');
 
 class AccountsController {
 
@@ -20,6 +21,17 @@ class AccountsController {
      if(!service.success){
       return res.status(service.status).json( service.error );
      }
+
+    return res.status(service.status).json( service.result );
+  }
+
+  async show(req, res){
+
+    const service = await ShowService.call(req.params.id, req.user_id);
+
+    if(!service.success){
+      return res.status(service.status).json( service.error );
+    }
 
     return res.status(service.status).json( service.result );
   }

@@ -3,6 +3,7 @@ const app = require('../src/app');
 const StoreUserService = require('../src/app/services/users/store');
 const AuthService = require('../src/app/services/auth/auth');
 
+let account;
 const user = {
   full_name: 'Teste de integração',
   cpf: String(Math.floor(Math.random() * 100000000 + 99999999)),
@@ -33,6 +34,7 @@ describe("Store account.", () => {
         expect(res.body.message).toBe('Conta criada com sucesso.');
         expect(res.body).toHaveProperty('account');
         expect(res.body.account.user_id).toBe(user.id);
+        account = res.body.account
       });
   });
 
@@ -65,6 +67,33 @@ describe("Index account", () => {
         expect(res.body.accounts.length).toBe(1);
         expect(res.body.accounts[0]).toHaveProperty('name');
         expect(res.body.accounts[0].name).toBe('Conta teste');
+      });
+  });
+});
+
+describe("Show account", () => {
+  it('Visualizar conta por id', async () => {
+    await request(app)
+      .get(`/accounts/${account.id}`)
+      .set('Authorization', `bearer ${ user.token }`)
+      .then( res => {
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Visualização de conta.');
+        expect(res.body).toHaveProperty('account');
+        expect(res.body.account.id).toBe(account.id);
+        expect(res.body.account.name).toBe(account.name);
+      });
+  });
+
+  it('Visualizar conta por id que não pertença ao usuário logado', async () => {
+    await request(app)
+      .get(`/accounts/${account.id + 1000}`)
+      .set('Authorization', `bearer ${ user.token }`)
+      .then( res => {
+        expect(res.status).toBe(404);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Conta não encontrada.');
       });
   });
 });
