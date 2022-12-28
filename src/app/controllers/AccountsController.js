@@ -17,6 +17,7 @@ class AccountsController {
   async validation(req, res, next){
 
     const schema = Yup.object().shape({
+      name: Yup.string().min(5).max(20).required(),
       balance: Yup.number()
     });
 

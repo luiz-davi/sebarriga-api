@@ -7,6 +7,7 @@ class Account extends Model {
     super.init(
       {
         balance: Sequelize.FLOAT,
+        name: Sequelize.STRING
       },
       {
         sequelize,

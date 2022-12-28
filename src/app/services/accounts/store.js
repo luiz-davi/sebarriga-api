@@ -3,11 +3,11 @@
 class StoreService {
 
   async call(params, user_id) {
+    const { name, balance } = params;
     const accounts = await Account.findAll({
-      where: { user_id }
+      where: { user_id, name }
     });
 
-    const { balance } = params;
 
     if(accounts.length > 0){
       return {
@@ -16,14 +16,15 @@ class StoreService {
         result: {
           accounts
         },
-        error: { message: 'Usuário já possui uma conta aberta.' }
+        error: { message: 'Você já possui uma conta com esse nome.' }
       };
     }
 
     try {
       const account = await Account.create({
+        name,
+        balance: balance || 0,
         user_id,
-        balance: balance || 0
       });
 
       return {
@@ -41,7 +42,7 @@ class StoreService {
         success: false,
         status: 400,
         result: {},
-        error: {message: 'Deu ruim!!'}
+        error: error.errors
       };
     }
   }

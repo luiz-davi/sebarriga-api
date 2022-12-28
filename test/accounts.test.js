@@ -23,31 +23,31 @@ describe("Store account.", () => {
      await request(app)
       .post('/accounts')
       .set('Authorization', `bearer ${ user.token }`)
-      .send({})
+      .send({
+        name: "Conta teste",
+        balance: 10.40
+      })
       .then(res => {
         expect(res.status).toBe(201);
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('Conta criada com sucesso.');
         expect(res.body).toHaveProperty('account');
         expect(res.body.account.user_id).toBe(user.id);
-
       });
   });
 
-  /**
-   * Com no teste anterior, o usuário e uma conta
-   * foram criados, não será necessário recriar o usuário,
-   * apenas cria uma nova conta.
-   */
-  it('Criar um conta para um usuário que já possui conta.', async () => {
+  it('Criar um conta com o mesmo nome', async () => {
     await request(app)
       .post('/accounts')
       .set('Authorization', `bearer ${ user.token }`)
-      .send({})
+      .send({
+        name: "Conta teste",
+        balance: 10.40
+      })
       .then(res => {
         expect(res.status).toBe(422);
         expect(res.body).toHaveProperty('message');
-        expect(res.body.message).toBe('Usuário já possui uma conta aberta.');
+        expect(res.body.message).toBe('Você já possui uma conta com esse nome.');
       });
   })
 });
