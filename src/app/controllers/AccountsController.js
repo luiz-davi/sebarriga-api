@@ -1,5 +1,6 @@
 const Yup = require('yup');
 const StoreService = require('../services/accounts/store');
+const IndexService = require('../services/accounts/index');
 
 class AccountsController {
 
@@ -11,8 +12,17 @@ class AccountsController {
      }
 
     return res.status(service.status).json( service.result );
-
 	}
+
+  async index(req, res){
+    const service = await IndexService.call(req.user_id);
+
+     if(!service.success){
+      return res.status(service.status).json( service.error );
+     }
+
+    return res.status(service.status).json( service.result );
+  }
 
   async validation(req, res, next){
 

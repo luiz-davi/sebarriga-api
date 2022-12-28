@@ -14,5 +14,6 @@ routes.use(authMiddleware); // Todas as rotas a baixo dessa rota passarão pela 
 routes.put('/users', UsersController.update);
 
 routes.post('/accounts', AccountsController.validation ,AccountsController.store);
+routes.get('/accounts', AccountsController.index);
 
 module.exports = routes;

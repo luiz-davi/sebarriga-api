@@ -51,3 +51,20 @@ describe("Store account.", () => {
       });
   })
 });
+
+describe("Index account", () => {
+  it('Listando contas', async () => {
+    await request(app)
+      .get('/accounts')
+      .set('Authorization', `bearer ${ user.token }`)
+      .then(res => {
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Listagem de contas.');
+        expect(res.body).toHaveProperty('accounts');
+        expect(res.body.accounts.length).toBe(1);
+        expect(res.body.accounts[0]).toHaveProperty('name');
+        expect(res.body.accounts[0].name).toBe('Conta teste');
+      });
+  });
+});
