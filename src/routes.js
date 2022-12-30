@@ -16,5 +16,6 @@ routes.put('/users', UsersController.update);
 routes.post('/accounts', AccountsController.validation ,AccountsController.store);
 routes.get('/accounts', AccountsController.index);
 routes.get('/accounts/:id', AccountsController.show);
+routes.put('/accounts/:id', AccountsController.validationUpdate,AccountsController.update);
 
 module.exports = routes;

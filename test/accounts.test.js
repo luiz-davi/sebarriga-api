@@ -2,8 +2,10 @@ const request = require('supertest');
 const app = require('../src/app');
 const StoreUserService = require('../src/app/services/users/store');
 const AuthService = require('../src/app/services/auth/auth');
+const StoreAccountService = require('../src/app/services/accounts/store');
 
 let account;
+let first_account;
 const user = {
   full_name: 'Teste de integração',
   cpf: String(Math.floor(Math.random() * 100000000 + 99999999)),
@@ -17,6 +19,9 @@ beforeAll( async () => {
   const token = await AuthService.call(user);
   user.id = result.result.user.id
   user.token = token.result.token;
+  const account_service = await StoreAccountService.call({ name: 'Acc #1', balance: 20}, user.id);
+  console.log(account_service);
+  first_account = account_service.result.account;
 });
 
 describe("Store account.", () => {
@@ -64,9 +69,9 @@ describe("Index account", () => {
         expect(res.body).toHaveProperty('message');
         expect(res.body.message).toBe('Listagem de contas.');
         expect(res.body).toHaveProperty('accounts');
-        expect(res.body.accounts.length).toBe(1);
+        expect(res.body.accounts.length).toBe(2);
         expect(res.body.accounts[0]).toHaveProperty('name');
-        expect(res.body.accounts[0].name).toBe('Conta teste');
+        expect(res.body.accounts[0].name).toBe(first_account.name);
       });
   });
 });
@@ -97,3 +102,35 @@ describe("Show account", () => {
       });
   });
 });
+
+describe('Update account', () => {
+  it('Atualizar uma conta', async () => {
+    await request(app)
+      .put(`/accounts/${account.id}`)
+      .set('Authorization', `bearer ${ user.token }`)
+      .send({
+        name: 'Test account'
+      })
+      .then(res => {
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('account');
+        expect(res.body.account.id).toBe(account.id);
+        expect(res.body.account).toHaveProperty('name');
+        expect(res.body.account.name).toBe('Test account');
+      });
+  });
+
+  it('Atualizar o nome da contra para uma que já exista', async () => {
+    await request(app)
+      .put(`/accounts/${account.id}`)
+      .set('Authorization', `bearer ${ user.token }`)
+      .send({
+        name: first_account.name
+      })
+      .then(res => {
+        expect(res.status).toBe(400);
+        expect(res.body).toHaveProperty('message');
+        expect(res.body.message).toBe('Já existe uma conta com esse nome.');
+      });
+  })
+})
