@@ -17,5 +17,6 @@ routes.post('/accounts', AccountsController.validation ,AccountsController.store
 routes.get('/accounts', AccountsController.index);
 routes.get('/accounts/:id', AccountsController.show);
 routes.put('/accounts/:id', AccountsController.validationUpdate,AccountsController.update);
+routes.delete('/accounts/:id', AccountsController.destroy);
 
 module.exports = routes;

@@ -30,8 +30,7 @@ describe("Store account.", () => {
       .post('/accounts')
       .set('Authorization', `bearer ${ user.token }`)
       .send({
-        name: "Conta teste",
-        balance: 10.40
+        name: "Conta teste"
       })
       .then(res => {
         expect(res.status).toBe(201);
@@ -134,3 +133,28 @@ describe('Update account', () => {
       });
   })
 })
+
+describe('Destroy account', () => {
+  it('Destruindo uma conta', async () => {
+    await request(app)
+      .delete(`/accounts/${account.id}`)
+      .set('Authorization', `bearer ${ user.token }`)
+      .then(res => {
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('destroy');
+        expect(res.body.destroy).toBe(true);
+      });
+  });
+
+  it('Destruindo uma conta com saldo', async () => {
+     await request(app)
+      .delete(`/accounts/${first_account.id}`)
+      .set('Authorization', `bearer ${ user.token }`)
+      .then(res => {
+        expect(res.status).toBe(422);
+        expect(res.body).toHaveProperty('error');
+        expect(res.body.error).toHaveProperty('message');
+        expect(res.body.error.message).toBe('Sua conta ainda possui saldo.');
+      });
+  });
+});

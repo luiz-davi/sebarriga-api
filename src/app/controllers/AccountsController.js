@@ -3,6 +3,8 @@ const StoreService = require('../services/accounts/store');
 const IndexService = require('../services/accounts/index');
 const ShowService = require('../services/accounts/show');
 const UpdateService = require('../services/accounts/update');
+const DestroyService = require('../services/accounts/destroy');
+
 
 class AccountsController {
 
@@ -40,6 +42,16 @@ class AccountsController {
   async update(req, res){
 
     const service = await UpdateService.call(req.params.id, req.body, req.user_id);
+
+    if(!service.success){
+      return res.status(service.status).json( service.error );
+    }
+
+    return res.status(service.status).json( service.result );
+  }
+
+  async destroy(req, res){
+    const service = await DestroyService.call(req.params.id, req.user_id);
 
     if(!service.success){
       return res.status(service.status).json( service.error );
