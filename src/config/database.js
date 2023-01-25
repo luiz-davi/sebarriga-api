@@ -1,7 +1,7 @@
 module.exports = {
   dialect: 'postgres',
   username: 'postgres',
-  password: '',
+  password: '1521215',
   database: 'seubarriga_api',
   host: 'localhost',
   define: {
